@@ -51,7 +51,7 @@ public  class AuthorizationServerConfig extends AuthorizationServerConfigurerAda
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_USER", "ROLE_ADMIN")
                 .scopes("read", "write")
-                .secret("secret")
+                .secret("$2a$12$3kAjqgPDrhXUnclehXTk8eteGMYWwyrDqmGCQMHKkBqEcTtA11hxy")
                 .accessTokenValiditySeconds(accessTokenExpiration).
                 refreshTokenValiditySeconds(refreshTokenExpiration);
     }
