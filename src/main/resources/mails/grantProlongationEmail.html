@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p layout:fragment="headline" th:text="${'Witaj, ' + recipientsName + '.'}">Witaj, Ziomuś</p>
+<div layout:fragment="content">
+    <p th:inline="text">
+        Gratulujemy! Twój wniosek o przesunięcie daty spłaty faktury nr [[${invoiceNumber}]] został rozpatrzony pozytywnie.<br />
+        Pamiętaj o zapłacie (z góry) prowizji za przedłużenie.
+        <p th:text="${'Brak zapłaty prowizji do dnia ' + paymentDue + ' spowoduje anulowanie wstępnej decyzji.'}"></p>
+    </p>
+    <p th:inline="text">
+        W razie dodatkowych pytań zapraszamy do kontaktu pod numerem telefonu [[${contact.phone}]]
+        lub adresem e-mail [[${contact.email}]]
+    </p>
+</div>
+</body>
+</html>

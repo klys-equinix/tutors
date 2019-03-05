@@ -1,0 +1,66 @@
+server:
+  port: 8080
+  ssl:
+    key-store: keystore.p12
+    key-store-password: password
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+  error:
+    whitelabel:
+        enabled: false
+  url: localhost:8080
+
+spring:
+  application:
+    name: finces
+  resources:
+    add-mappings: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+    locale: pl_PL
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finces
+    username: finces
+    password: finces
+    platform: postgres
+#If you want to create migration ddl's, change ddl-auto to update, and then copy sql from logs, making necessary adjustments
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+#        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: devtest@a.pl
+#    password: Tof-ez-deK
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+  data:
+    rest:
+      base-path: /api
+
+contact:
+  email: a@finces.pl
+  phone: 22 228 74 86
+  workingHours:
+    workdays:
+      open: "8:00"
+      close: "20:00"
+    saturday:
+      open: "9:00"
+      close: "17:00"
+    sunday:
+      open:
+      close:
+
+

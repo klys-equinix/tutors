@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p layout:fragment="headline" th:text="${'Witaj, ' + recipientsName + '.'}">Witaj, Ziomuś</p>
+<div layout:fragment="content">
+    <p>
+        Przypominamy, że <span th:text="${daysBefore == 1 ? 'jutro' : 'za ' + daysBefore + ' dni'}">za 167 lat</span>
+        upływa termin spłaty zobowiązania wynikającego z faktury Nr <span th:text="${invoiceNumber}">Fak/Tur/A123</span>
+        Po tym dniu masz 14 dni okresu karencji.
+    </p>
+    <p th:inline="text">
+        W razie dodatkowych pytań zapraszamy do kontaktu pod numerem telefonu [[${contact.phone}]]
+        lub adresem e-mail [[${contact.email}]]
+    </p>
+</div>
+</body>
+</html>

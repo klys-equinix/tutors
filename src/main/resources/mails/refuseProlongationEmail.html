@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p layout:fragment="headline" th:text="${'Witaj, ' + recipientsName + '.'}">Witaj, Ziomuś</p>
+<div layout:fragment="content">
+    <p th:inline="text">
+        Przykro nam! Twój wniosek o przesunięcie daty spłaty faktury wskazanej poniżej został rozpatrzony negatywnie.
+    </p>
+    <p th:text="${'Ostateczna data spłaty zobowiązania wynikającego z finansowania faktury nr '+invoiceNumber+' upłynie '+repaymentDate+'.'}"></p>
+    <p th:inline="text">
+        W razie dodatkowych pytań zapraszamy do kontaktu pod numerem telefonu [[${contact.phone}]]
+        lub adresem e-mail [[${contact.email}]]
+    </p>
+</div>
+</body>
+</html>

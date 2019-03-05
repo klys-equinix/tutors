@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p layout:fragment="headline" th:text="${'Witaj, ' + recipientsName + '.'}">Witaj, Ziomuś</p>
+<div layout:fragment="content">
+    <p>
+        Twój wniosek o finansowanie faktury jest weryfikowany. Poinformujemy Cię o decyzji jak najszybciej.
+    </p>
+</div>
+</body>
+</html>
