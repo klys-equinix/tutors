@@ -43,7 +43,6 @@ class UserServiceImpl implements UserService {
 
     @Transactional
     public User registerUser(RegistrationUserDTO registrationUserDto) {
-        //check if all agreements are checked and that their number is right
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         return userRepository.save(new User(registrationUserDto));
     }
@@ -51,7 +50,7 @@ class UserServiceImpl implements UserService {
 
     @Transactional
     public User requestPasswordChange(String email) {
-        User user = userRepository.findOneByEmailIgnoreCase(email).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
+        var user = userRepository.findOneByEmailIgnoreCase(email).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
         user = createTokenForUser(user);
         return userRepository.save(user);
     }
@@ -79,7 +78,7 @@ class UserServiceImpl implements UserService {
 
     @Transactional
     public User requestAccountReset(String email) {
-        User user = userRepository.findOneByEmailIgnoreCase(email).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
+        var user = userRepository.findOneByEmailIgnoreCase(email).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
         user = createTokenForUser(user);
         mailService.sendPasswordResetEmail(user);
         return userRepository.save(user);
@@ -87,7 +86,7 @@ class UserServiceImpl implements UserService {
 
     @Transactional
     public User resetAccount(AccountResetDTO accountResetDTO) throws CustomException {
-        User user = userRepository.findOneByEmailIgnoreCase(accountResetDTO.getEmail()).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
+        var user = userRepository.findOneByEmailIgnoreCase(accountResetDTO.getEmail()).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
         checkTokenValidity(accountResetDTO, user);
         redeemToken(accountResetDTO, user);
         return userRepository.save(user);
@@ -95,7 +94,7 @@ class UserServiceImpl implements UserService {
 
     @Transactional
     public void logUsedIp(String userEmail, String usedIp) {
-        User user = userRepository.findOneByEmailIgnoreCase(userEmail).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
+        var user = userRepository.findOneByEmailIgnoreCase(userEmail).orElseThrow(() -> new EntityNotFoundException("user.notFound"));
         if(!user.getUsedIps().contains(usedIp)) {
             user.getUsedIps().add(usedIp);
             userRepository.save(user);

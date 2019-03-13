@@ -20,7 +20,7 @@ public class SwaggerConfig {
     @Bean
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("finces-api")
+                .groupName("tutors-api")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(getSwaggerPaths())

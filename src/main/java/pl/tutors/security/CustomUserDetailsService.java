@@ -2,7 +2,6 @@ package pl.tutors.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,12 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         log.debug("Authenticating {}", email);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        val user = userRepository.findOneByEmailIgnoreCase(email);
+        var user = userRepository.findOneByEmailIgnoreCase(email);
         return user.map(u -> {
             if (!u.isActivated() || u.getAttemptedLogins() > 3) {
                 throw new UserNotActivatedException(email);

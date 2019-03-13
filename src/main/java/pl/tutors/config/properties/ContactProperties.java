@@ -40,7 +40,7 @@ public class ContactProperties {
 
     public ContactProperties() {
         phone = "22 228 74 86";
-        email = "kontakt@finces.pl";
+        email = "kontakt@tutors.pl";
         workingHours = new WorkingHours();
     }
 }
