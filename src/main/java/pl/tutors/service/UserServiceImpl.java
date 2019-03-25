@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.tutors.domain.User;
+import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
 import pl.tutors.repository.UserRepository;
 import pl.tutors.rest.dtos.AccountResetDTO;
@@ -16,6 +17,7 @@ import pl.tutors.rest.dtos.RegistrationUserDTO;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -47,6 +49,14 @@ class UserServiceImpl implements UserService {
         return userRepository.save(new User(registrationUserDto));
     }
 
+    @Transactional
+    public User addDetailsForUser(UserDetails details, UUID userId) throws CustomException {
+        var user = userRepository.findById(userId).orElseThrow(() -> new CustomException("User not found"));
+        if (!Objects.equals(user, currentUserService.getCurrentUser()))
+            throw new CustomException("user.edit.denied");
+        user.setDetails(details);
+        return userRepository.save(user);
+    }
 
     @Transactional
     public User requestPasswordChange(String email) {

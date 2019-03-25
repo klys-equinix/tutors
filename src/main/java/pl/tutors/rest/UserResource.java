@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
 import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
@@ -59,6 +60,11 @@ public class UserResource {
     @ResponseStatus(HttpStatus.OK)
     public void resetAccount(@RequestBody AccountResetDTO accountResetDTO) throws CustomException {
         userManagementFacade.resetAccount(accountResetDTO);
+    }
+
+    @RequestMapping(value = "/{userId}/details", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> addDetailsForUser(@RequestBody @Valid UserDetails details, @PathVariable UUID userId) throws CustomException {
+        return ResponseEntity.ok(new UserDTO(userManagementFacade.addDetailsForUser(details, userId)));
     }
 
 }

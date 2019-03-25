@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.tutors.domain.User;
+import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
 import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
@@ -34,6 +35,11 @@ public class UserManagementFacade implements UserService, CurrentUserService {
     @Override
     public User registerUser(RegistrationUserDTO registrationUserDto) {
         return userService.registerUser(registrationUserDto);
+    }
+
+    @Override
+    public User addDetailsForUser(UserDetails details, UUID userId) throws CustomException {
+        return userService.addDetailsForUser(details, userId);
     }
 
     @Override

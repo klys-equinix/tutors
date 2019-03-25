@@ -6,10 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.Email;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -49,13 +49,14 @@ public class User {
 
     private boolean activated = true;
 
-    private String affiliate;
-
     private UUID passwordResetToken;
 
     private LocalDateTime tokenCreatedAt;
 
     private int attemptedLogins = 0;
+
+    @Embedded
+    private UserDetails details;
 
     @ElementCollection
     @CollectionTable(name="Ips", joinColumns=@JoinColumn(name="user_id"))
@@ -66,6 +67,5 @@ public class User {
         this.email = registrationUserDto.getEmail();
         this.password = registrationUserDto.getPassword();
         this.activated = true;
-        this.affiliate = registrationUserDto.getAffiliate();
     }
 }
