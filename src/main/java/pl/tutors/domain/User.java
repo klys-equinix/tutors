@@ -63,6 +63,9 @@ public class User {
     @Column(name="ip")
     public List<String> usedIps;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private TutorProfile tutorProfile;
+
     public User(RegistrationUserDTO registrationUserDto) {
         this.email = registrationUserDto.getEmail();
         this.password = registrationUserDto.getPassword();

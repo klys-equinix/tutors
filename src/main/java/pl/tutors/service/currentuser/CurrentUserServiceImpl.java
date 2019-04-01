@@ -1,4 +1,4 @@
-package pl.tutors.service;
+package pl.tutors.service.currentuser;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

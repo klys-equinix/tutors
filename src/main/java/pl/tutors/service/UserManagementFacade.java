@@ -7,14 +7,18 @@ import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
 import pl.tutors.rest.dtos.AccountResetDTO;
+import pl.tutors.rest.dtos.CreateTutorProfileDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
+import pl.tutors.service.currentuser.CurrentUserService;
+import pl.tutors.service.tutorprofile.TutorProfileService;
+import pl.tutors.service.usercrud.UserService;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserManagementFacade implements UserService, CurrentUserService {
+public class UserManagementFacade implements UserService, CurrentUserService, TutorProfileService {
     private UserService userService;
     private CurrentUserService currentUserService;
 
@@ -87,4 +91,8 @@ public class UserManagementFacade implements UserService, CurrentUserService {
         return userService.resetAccount(accountResetDTO);
     }
 
+    @Override
+    public User createTutorProfile(CreateTutorProfileDTO createTutorProfileDTO) {
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-package pl.tutors.service;
+package pl.tutors.service.usercrud;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +13,8 @@ import pl.tutors.repository.UserRepository;
 import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
+import pl.tutors.service.MailService;
+import pl.tutors.service.currentuser.CurrentUserService;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;

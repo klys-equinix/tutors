@@ -1,4 +1,4 @@
-package pl.tutors.service;
+package pl.tutors.service.usercrud;
 
 import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
