@@ -14,5 +14,5 @@ import java.util.UUID;
 
 
 public interface TutorProfileService {
-    User createTutorProfile(CreateTutorProfileDTO createTutorProfileDTO);
+    User createTutorProfile(TutorProfile createTutorProfileDTO);
 }

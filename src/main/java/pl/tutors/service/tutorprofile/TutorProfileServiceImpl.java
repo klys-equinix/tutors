@@ -6,7 +6,6 @@ import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.exception.CustomException;
 import pl.tutors.repository.UserRepository;
-import pl.tutors.rest.dtos.CreateTutorProfileDTO;
 import pl.tutors.util.SecurityUtil;
 
 @Service
@@ -15,17 +14,11 @@ public class TutorProfileServiceImpl implements TutorProfileService {
     private final UserRepository userRepository;
 
     @Override
-    public User createTutorProfile(CreateTutorProfileDTO createTutorProfileDTO) {
+    public User createTutorProfile(TutorProfile tutorProfile) {
         return userRepository.findOneByEmailIgnoreCase(SecurityUtil.getCurrentUserLogin())
                 .map(user -> {
                     user.setTutorProfile(
-                            TutorProfile.builder()
-                                    .lat(createTutorProfileDTO.getLat())
-                                    .lng(createTutorProfileDTO.getLng())
-                                    .commuteRate(createTutorProfileDTO.getCommuteRate())
-                                    .range(createTutorProfileDTO.getRange())
-                                    .tutorsPlaceAvailable(createTutorProfileDTO.isTutorsPlaceAvailable())
-                                    .build()
+                            tutorProfile
                     );
                     return userRepository.save(user);
                 }).orElseThrow(() -> new CustomException("User not found"));

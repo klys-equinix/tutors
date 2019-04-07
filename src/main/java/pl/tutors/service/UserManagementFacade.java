@@ -3,6 +3,7 @@ package pl.tutors.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
@@ -21,14 +22,19 @@ import java.util.UUID;
 public class UserManagementFacade implements UserService, CurrentUserService, TutorProfileService {
     private UserService userService;
     private CurrentUserService currentUserService;
+    private TutorProfileService tutorProfileService;
 
     @Autowired
     public UserManagementFacade(
             @Qualifier("userServiceImpl") UserService userService,
-            @Qualifier("currentUserServiceImpl") CurrentUserService currentUserService)
+            @Qualifier("currentUserServiceImpl") CurrentUserService currentUserService,
+            @Qualifier("tutorProfileServiceImpl") TutorProfileService tutorProfileService
+
+    )
     {
         this.userService = userService;
         this.currentUserService = currentUserService;
+        this.tutorProfileService = tutorProfileService;
     }
 
     @Override
@@ -92,7 +98,7 @@ public class UserManagementFacade implements UserService, CurrentUserService, Tu
     }
 
     @Override
-    public User createTutorProfile(CreateTutorProfileDTO createTutorProfileDTO) {
-        return null;
+    public User createTutorProfile(TutorProfile tutorProfile) {
+        return tutorProfileService.createTutorProfile(tutorProfile);
     }
 }

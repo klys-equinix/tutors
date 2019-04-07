@@ -31,6 +31,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +58,5 @@ public class TutorProfile {
     private boolean tutorsPlaceAvailable;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @MapKey(name = "level")
-    private Map<Level, Course> courses = new HashMap<>();
+    private List<Course> courses = new ArrayList<>();
 }

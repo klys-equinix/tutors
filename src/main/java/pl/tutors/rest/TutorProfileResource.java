@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
 import pl.tutors.rest.dtos.AccountResetDTO;
@@ -32,8 +33,8 @@ public class TutorProfileResource {
     private final UserManagementFacade userManagementFacade;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> create(@RequestBody @Valid CreateTutorProfileDTO createTutorProfileDTO) {
-        return ResponseEntity.ok(new UserDTO(userManagementFacade.createTutorProfile(createTutorProfileDTO)));
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid TutorProfile tutorProfile) {
+        return ResponseEntity.ok(new UserDTO(userManagementFacade.createTutorProfile(tutorProfile)));
     }
 
 }

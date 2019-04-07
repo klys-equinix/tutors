@@ -2,6 +2,7 @@ package pl.tutors.rest.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
 
@@ -27,6 +28,7 @@ public class UserDTO {
     private boolean verified;
     private int smsResendTries;
     private UserDetails details;
+    private TutorProfile profile;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -34,5 +36,6 @@ public class UserDTO {
         this.roles = user.getRoles();
         this.activated = user.isActivated();
         this.details = user.getDetails();
+        this.profile = user.getTutorProfile();
     }
 }
