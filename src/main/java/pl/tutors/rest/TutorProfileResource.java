@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
+import pl.tutors.query.UserProfileQuery;
 import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.CreateTutorProfileDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
@@ -35,6 +36,15 @@ public class TutorProfileResource {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> create(@RequestBody @Valid TutorProfile tutorProfile) {
         return ResponseEntity.ok(new UserDTO(userManagementFacade.createTutorProfile(tutorProfile)));
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<UserDTO>> readAll(
+            UserProfileQuery userProfileQuery
+    ) {
+        return ResponseEntity.ok(userManagementFacade.readAllUserProfiles(
+                userProfileQuery
+        ).stream().map(UserDTO::new).collect(Collectors.toList()));
     }
 
 }

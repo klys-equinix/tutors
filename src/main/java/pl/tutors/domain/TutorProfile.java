@@ -51,8 +51,8 @@ public class TutorProfile {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private long lat;
-    private long lng;
+    private double lat;
+    private double lng;
     private long range;
     private long commuteRate;
     private boolean tutorsPlaceAvailable;

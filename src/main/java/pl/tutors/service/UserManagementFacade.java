@@ -7,6 +7,7 @@ import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
 import pl.tutors.exception.CustomException;
+import pl.tutors.query.UserProfileQuery;
 import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.CreateTutorProfileDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
@@ -100,5 +101,10 @@ public class UserManagementFacade implements UserService, CurrentUserService, Tu
     @Override
     public User createTutorProfile(TutorProfile tutorProfile) {
         return tutorProfileService.createTutorProfile(tutorProfile);
+    }
+
+    @Override
+    public List<User> readAllUserProfiles(UserProfileQuery userProfileQuery) {
+        return tutorProfileService.readAllUserProfiles(userProfileQuery);
     }
 }
