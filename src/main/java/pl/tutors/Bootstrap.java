@@ -9,12 +9,17 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+import pl.tutors.domain.Course;
 import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
+import pl.tutors.domain.dictionary.Discipline;
+import pl.tutors.domain.dictionary.Level;
 import pl.tutors.repository.UserRepository;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
 import pl.tutors.service.UserManagementFacade;
+
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +55,13 @@ public class Bootstrap implements InitializingBean {
                                 .lng(21.015532)
                                 .range(2.5)
                                 .commuteRate(10)
+                                .courses(Collections.singletonList(
+                                        Course.builder()
+                                                .customName("Kurs 1")
+                                                .discipline(Discipline.POLISH)
+                                                .level(Level.ELEMENTARY)
+                                                .build()
+                                ))
                                 .build()
                 );
                 user2.setDetails(UserDetails.builder().firstName("c").lastName("d").phoneNumber("333333333").build());

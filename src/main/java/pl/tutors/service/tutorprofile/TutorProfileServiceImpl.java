@@ -1,5 +1,6 @@
 package pl.tutors.service.tutorprofile;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.types.dsl.NumberPath;
@@ -52,7 +53,21 @@ public class TutorProfileServiceImpl implements TutorProfileService {
                                         .add(sin(radians(Expressions.constant(query.lat)))
                                                 .multiply(sin(radians(lat))))))))
                         .multiply(Expressions.constant(RADIUS_OF_EARTH)));
-        return (List<User>)makeCollection(userRepository.findAll(formula.lt(query.lat * 1000)));
+        BooleanExpression predicate = formula.lt(query.lat * 1000);
+
+        if(query.level != null)
+            predicate.and(qUser.tutorProfile.courses.any().level.eq(query.level));
+
+        if(query.discipline != null)
+            predicate.and(qUser.tutorProfile.courses.any().discipline.eq(query.discipline));
+
+        if(query.hourlyRate__goe != null)
+            predicate.and(qUser.tutorProfile.courses.any().hourlyRate.goe(query.hourlyRate__goe));
+
+        if(query.hourlyRate__loe != null)
+            predicate.and(qUser.tutorProfile.courses.any().hourlyRate.loe(query.hourlyRate__loe));
+
+        return (List<User>)makeCollection(userRepository.findAll(predicate));
     }
 
     public static <E> Collection<E> makeCollection(Iterable<E> iter) {
