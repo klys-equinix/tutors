@@ -2,6 +2,8 @@ package pl.tutors.domain;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +23,8 @@ import javax.validation.constraints.NotBlank;
 @Embeddable
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserDetails {
     @NotBlank
     private String firstName;

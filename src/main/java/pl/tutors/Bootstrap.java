@@ -11,6 +11,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
+import pl.tutors.domain.UserDetails;
 import pl.tutors.repository.UserRepository;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
 import pl.tutors.service.UserManagementFacade;
@@ -33,15 +34,25 @@ public class Bootstrap implements InitializingBean {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 User user = userManagementFacade.registerUser(RegistrationUserDTO.builder().email("mock@mock.pl").password("password").build());
-                userManagementFacade.registerUser(RegistrationUserDTO.builder().email("mock1@mock.pl").password("password").build());
+                User user2 = userManagementFacade.registerUser(RegistrationUserDTO.builder().email("mock1@mock.pl").password("password").build());
                 user.setTutorProfile(
                         TutorProfile.builder()
                                 .lat(52.237049)
                                 .lng(21.017532)
-                                .range(10)
+                                .range(3)
                                 .commuteRate(1)
                                 .build()
                 );
+                user.setDetails(UserDetails.builder().firstName("a").lastName("b").phoneNumber("333333333").build());
+                user2.setTutorProfile(
+                        TutorProfile.builder()
+                                .lat(52.238049)
+                                .lng(21.015532)
+                                .range(2.5)
+                                .commuteRate(10)
+                                .build()
+                );
+                user2.setDetails(UserDetails.builder().firstName("c").lastName("d").phoneNumber("333333333").build());
                 userRepository.save(user);
             }
         });

@@ -53,7 +53,7 @@ public class TutorProfile {
 
     private double lat;
     private double lng;
-    private long range;
+    private double range;
     private long commuteRate;
     private boolean tutorsPlaceAvailable;
 
