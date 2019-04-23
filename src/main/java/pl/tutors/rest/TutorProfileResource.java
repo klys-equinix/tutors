@@ -40,7 +40,7 @@ public class TutorProfileResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> readAll(
-            UserProfileQuery userProfileQuery
+            @Valid UserProfileQuery userProfileQuery
     ) {
         return ResponseEntity.ok(userManagementFacade.readAllUserProfiles(
                 userProfileQuery

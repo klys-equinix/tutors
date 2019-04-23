@@ -57,6 +57,6 @@ public class TutorProfile {
     private long commuteRate;
     private boolean tutorsPlaceAvailable;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Course> courses = new ArrayList<>();
 }

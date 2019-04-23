@@ -53,19 +53,19 @@ public class TutorProfileServiceImpl implements TutorProfileService {
                                         .add(sin(radians(Expressions.constant(query.lat)))
                                                 .multiply(sin(radians(lat))))))))
                         .multiply(Expressions.constant(RADIUS_OF_EARTH)));
-        BooleanExpression predicate = formula.lt(query.lat * 1000);
+        BooleanExpression predicate = formula.lt(query.radius * 2 * 1000);
 
         if(query.level != null)
-            predicate.and(qUser.tutorProfile.courses.any().level.eq(query.level));
+            predicate = predicate.and(qUser.tutorProfile.courses.any().level.eq(query.level));
 
         if(query.discipline != null)
-            predicate.and(qUser.tutorProfile.courses.any().discipline.eq(query.discipline));
+            predicate = predicate.and(qUser.tutorProfile.courses.any().discipline.eq(query.discipline));
 
         if(query.hourlyRate__goe != null)
-            predicate.and(qUser.tutorProfile.courses.any().hourlyRate.goe(query.hourlyRate__goe));
+            predicate = predicate.and(qUser.tutorProfile.courses.any().hourlyRate.goe(query.hourlyRate__goe));
 
         if(query.hourlyRate__loe != null)
-            predicate.and(qUser.tutorProfile.courses.any().hourlyRate.loe(query.hourlyRate__loe));
+            predicate = predicate.and(qUser.tutorProfile.courses.any().hourlyRate.loe(query.hourlyRate__loe));
 
         return (List<User>)makeCollection(userRepository.findAll(predicate));
     }
