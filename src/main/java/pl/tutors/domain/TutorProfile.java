@@ -59,4 +59,7 @@ public class TutorProfile {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Course> courses = new ArrayList<>();
+
+    @OneToMany
+    private List<Offer> offers = new ArrayList<>();
 }

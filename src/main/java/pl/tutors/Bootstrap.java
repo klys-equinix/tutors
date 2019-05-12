@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.tutors.domain.Course;
+import pl.tutors.domain.Offer;
 import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.domain.UserDetails;
@@ -46,6 +47,25 @@ public class Bootstrap implements InitializingBean {
                                 .lng(21.017532)
                                 .range(3)
                                 .commuteRate(1)
+                                .courses(
+                                        Collections.singletonList(
+                                                Course.builder()
+                                                        .level(Level.ELEMENTARY)
+                                                        .discipline(Discipline.POLISH)
+                                                        .customName("k1")
+                                                        .hourlyRate(10l)
+                                                        .offers(
+                                                                Collections.singletonList(
+                                                                        Offer.builder()
+                                                                                .createdBy(user2)
+                                                                                .hour("12:00")
+                                                                                .day("Poniedziałek")
+                                                                                .createdBy(user2)
+                                                                                .build()
+                                                                )
+                                                        ).build()
+                                        )
+                                )
                                 .build()
                 );
                 user.setDetails(UserDetails.builder().firstName("a").lastName("b").phoneNumber("333333333").build());

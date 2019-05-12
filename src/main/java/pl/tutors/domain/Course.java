@@ -8,11 +8,16 @@ import org.hibernate.annotations.GenericGenerator;
 import pl.tutors.domain.dictionary.Discipline;
 import pl.tutors.domain.dictionary.Level;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -35,4 +40,10 @@ public class Course {
 
     @Enumerated(EnumType.STRING)
     private Level level;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Offer> offers = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Lesson> lessons = new ArrayList<>();
 }
