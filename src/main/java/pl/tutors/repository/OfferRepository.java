@@ -5,8 +5,10 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import pl.tutors.domain.Offer;
 import pl.tutors.domain.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface OfferRepository extends JpaRepository<Offer, UUID> {
+    List<Offer> findAllByCreatedBy(User user);
 }

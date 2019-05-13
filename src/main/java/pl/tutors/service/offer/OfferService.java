@@ -11,6 +11,7 @@ import pl.tutors.repository.OfferRepository;
 import pl.tutors.rest.dtos.OfferDTO;
 import pl.tutors.service.UserManagementFacade;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -58,5 +59,10 @@ public class OfferService {
                     throw new CustomException("No course with id");
                 }
         );
+    }
+
+    @Transactional(readOnly = true)
+    public List<Offer> findAllCreatedByMe() {
+        return offerRepository.findAllByCreatedBy(userManagementFacade.getCurrentUser());
     }
 }
