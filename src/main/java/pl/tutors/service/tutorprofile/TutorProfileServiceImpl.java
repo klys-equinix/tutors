@@ -6,12 +6,14 @@ import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.types.dsl.NumberPath;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.tutors.domain.QUser;
 import pl.tutors.domain.TutorProfile;
 import pl.tutors.domain.User;
 import pl.tutors.exception.CustomException;
 import pl.tutors.query.UserProfileQuery;
 import pl.tutors.repository.UserRepository;
+import pl.tutors.rest.dtos.UpdateTutorProfileLocationDTO;
 import pl.tutors.util.SecurityUtil;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class TutorProfileServiceImpl implements TutorProfileService {
     private final static Long RADIUS_OF_EARTH = 6371L;
 
     @Override
+    @Transactional
     public User createTutorProfile(TutorProfile tutorProfile) {
         return userRepository.findOneByEmailIgnoreCase(SecurityUtil.getCurrentUserLogin())
                 .map(user -> {
@@ -68,6 +71,17 @@ public class TutorProfileServiceImpl implements TutorProfileService {
             predicate = predicate.and(qUser.tutorProfile.courses.any().hourlyRate.loe(query.hourlyRate__loe));
 
         return (List<User>)makeCollection(userRepository.findAll(predicate));
+    }
+
+    @Override
+    @Transactional
+    public User updateTutorProfileLocation(UpdateTutorProfileLocationDTO updateTutorProfileLocationDTO) {
+        return userRepository.findOneByEmailIgnoreCase(SecurityUtil.getCurrentUserLogin())
+                .map(user -> {
+                    user.getTutorProfile().setLat(updateTutorProfileLocationDTO.getLat());
+                    user.getTutorProfile().setLng(updateTutorProfileLocationDTO.getLng());
+                    return userRepository.save(user);
+                }).orElseThrow(() -> new CustomException("User not found"));
     }
 
     public static <E> Collection<E> makeCollection(Iterable<E> iter) {

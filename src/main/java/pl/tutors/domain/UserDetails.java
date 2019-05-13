@@ -32,6 +32,9 @@ public class UserDetails {
     @NotBlank
     private String lastName;
 
+    @NotBlank
+    private String addressText;
+
     @PhoneNumberE164
     @Setter(AccessLevel.NONE)
     private String phoneNumber;

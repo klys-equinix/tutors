@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.CreateTutorProfileDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
+import pl.tutors.rest.dtos.UpdateTutorProfileLocationDTO;
 import pl.tutors.rest.dtos.UserDTO;
 import pl.tutors.service.UserManagementFacade;
 
@@ -47,4 +49,9 @@ public class TutorProfileResource {
         ).stream().map(UserDTO::new).collect(Collectors.toList()));
     }
 
+
+    @PutMapping
+    public ResponseEntity<UserDTO> updateLocation(@RequestBody @Valid UpdateTutorProfileLocationDTO updateTutorProfileLocationDTO) {
+        return ResponseEntity.ok(new UserDTO(userManagementFacade.updateTutorProfileLocation(updateTutorProfileLocationDTO)));
+    }
 }

@@ -21,6 +21,7 @@ import pl.tutors.rest.dtos.RegistrationUserDTO;
 import pl.tutors.service.UserManagementFacade;
 
 import java.util.Collections;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,9 @@ public class Bootstrap implements InitializingBean {
 
     private final UserManagementFacade userManagementFacade;
     private final UserRepository userRepository;
+
+    private static final double lat = 52.237049;
+    private static final double lng = 21.017528;
 
     @Autowired
     @Qualifier("transactionManager")
@@ -68,7 +72,7 @@ public class Bootstrap implements InitializingBean {
                                 )
                                 .build()
                 );
-                user.setDetails(UserDetails.builder().firstName("a").lastName("b").phoneNumber("333333333").build());
+                user.setDetails(UserDetails.builder().firstName("a").addressText("Adres 1").lastName("b").phoneNumber("333333333").build());
                 user2.setTutorProfile(
                         TutorProfile.builder()
                                 .lat(52.238049)
@@ -84,8 +88,13 @@ public class Bootstrap implements InitializingBean {
                                 ))
                                 .build()
                 );
-                user2.setDetails(UserDetails.builder().firstName("c").lastName("d").phoneNumber("333333333").build());
+                user2.setDetails(UserDetails.builder().firstName("c").lastName("d").addressText("Adres 2").phoneNumber("333333333").build());
                 userRepository.save(user);
+
+
+                IntStream.of(0, 20).forEach(i -> {
+
+                });
             }
         });
     }

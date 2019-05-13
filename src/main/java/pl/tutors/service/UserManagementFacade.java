@@ -12,6 +12,7 @@ import pl.tutors.rest.dtos.AccountResetDTO;
 import pl.tutors.rest.dtos.CreateTutorProfileDTO;
 import pl.tutors.rest.dtos.PasswordResetDTO;
 import pl.tutors.rest.dtos.RegistrationUserDTO;
+import pl.tutors.rest.dtos.UpdateTutorProfileLocationDTO;
 import pl.tutors.service.currentuser.CurrentUserService;
 import pl.tutors.service.tutorprofile.TutorProfileService;
 import pl.tutors.service.usercrud.UserService;
@@ -106,5 +107,10 @@ public class UserManagementFacade implements UserService, CurrentUserService, Tu
     @Override
     public List<User> readAllUserProfiles(UserProfileQuery userProfileQuery) {
         return tutorProfileService.readAllUserProfiles(userProfileQuery);
+    }
+
+    @Override
+    public User updateTutorProfileLocation(UpdateTutorProfileLocationDTO updateTutorProfileLocationDTO) {
+        return tutorProfileService.updateTutorProfileLocation(updateTutorProfileLocationDTO);
     }
 }
