@@ -25,6 +25,9 @@ public class OfferService {
     public void createOffer(OfferDTO offerDTO) {
         courseRepository.findById(offerDTO.getCourseId()).ifPresentOrElse(
                 c -> {
+                    var currentUser = userManagementFacade.getCurrentUser();
+                    if(c.getOffers().stream().map(Offer::getCreatedBy).anyMatch(u -> u.equals(currentUser)))
+                        throw new CustomException("Cannot duplicate offer");
                     c.getOffers().add(
                             Offer.builder()
                                     .day(offerDTO.getDay())

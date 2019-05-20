@@ -21,6 +21,8 @@ import pl.tutors.rest.dtos.RegistrationUserDTO;
 import pl.tutors.service.UserManagementFacade;
 
 import java.util.Collections;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 @Service
@@ -39,6 +41,7 @@ public class Bootstrap implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        Random random = new Random();
         TransactionTemplate tmpl = new TransactionTemplate(txManager);
         tmpl.execute(new TransactionCallbackWithoutResult() {
             @Override
@@ -92,10 +95,56 @@ public class Bootstrap implements InitializingBean {
                 userRepository.save(user);
 
 
-                IntStream.of(0, 20).forEach(i -> {
+                IntStream.range(0, 20).forEach(i -> {
+                    var u = userManagementFacade.registerUser(
+                            RegistrationUserDTO.builder()
+                                    .email("mock+" + i + "@mock.pl")
+                                    .password("password")
+                                    .build()
+                    );
 
+                    u.setDetails(
+                            UserDetails.builder()
+                                    .firstName(generateRandomString())
+                                    .lastName(generateRandomString())
+                                    .addressText("Adres Testowy " + i)
+                                    .phoneNumber(getRandomStringFromValues("0123456789", 9))
+                                    .build()
+                    );
+                    var sign = i / 2 == 0 ? 1 : -1;
+                    u.setTutorProfile(
+                            TutorProfile.builder()
+                                    .lat(52.237049 + (random.nextDouble() / 5 * sign))
+                                    .lng(21.017532 + (random.nextDouble() / 5 * sign))
+                                    .range(5)
+                                    .commuteRate(i)
+                                    .courses(
+                                            Collections.singletonList(
+                                                    Course.builder()
+                                                            .level(Level.values()[i % 3])
+                                                            .discipline(Discipline.values()[i % 6])
+                                                            .customName("K" + i)
+                                                            .hourlyRate(i * 10)
+                                                            .build()
+                                            )
+                                    )
+                                    .build()
+                    );
+                    userRepository.save(user);
                 });
             }
         });
+    }
+
+    public static String generateRandomString() {
+        return getRandomStringFromValues("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 8);
+    }
+
+    private static String getRandomStringFromValues(String allowedValues, Integer strLength) {
+        StringBuilder stringBuilder = new StringBuilder();
+        IntStream.range(0, strLength)
+                .map(i -> ThreadLocalRandom.current().nextInt(0, allowedValues.length()))
+                .forEach(v -> stringBuilder.append(allowedValues.charAt(v)));
+        return stringBuilder.toString();
     }
 }

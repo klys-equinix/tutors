@@ -50,27 +50,38 @@ public class TutorProfileServiceImpl implements TutorProfileService {
         NumberPath<Double> lat = qUser.tutorProfile.lat;
         NumberPath<Double> lng = qUser.tutorProfile.lng;
         NumberExpression<Double> formula =
-                (acos(cos(radians(Expressions.constant(query.lat)))
-                        .multiply(cos(radians(lat))
-                                .multiply(cos(radians(lng).subtract(radians(Expressions.constant(query.lng)))
-                                        .add(sin(radians(Expressions.constant(query.lat)))
-                                                .multiply(sin(radians(lat))))))))
-                        .multiply(Expressions.constant(RADIUS_OF_EARTH)));
-        BooleanExpression predicate = formula.lt(query.radius * 2 * 1000);
+                (
+                        acos(
+                                cos(radians(Expressions.constant(query.lat)))
+                                        .multiply(cos(radians(lat)))
+                                        .multiply(
+                                                cos(
+                                                        radians(lng).subtract(radians(Expressions.constant(query.lng)))
+                                                )
+                                        )
+                                        .add(
+                                                sin(radians(Expressions.constant(query.lat)))
+                                                        .multiply(sin(radians(lat)))
+                                        )
+                        )
+                                .multiply(Expressions.constant(RADIUS_OF_EARTH))
+                );
 
-        if(query.level != null)
+        BooleanExpression predicate = formula.lt(query.radius);
+
+        if (query.level != null)
             predicate = predicate.and(qUser.tutorProfile.courses.any().level.eq(query.level));
 
-        if(query.discipline != null)
+        if (query.discipline != null)
             predicate = predicate.and(qUser.tutorProfile.courses.any().discipline.eq(query.discipline));
 
-        if(query.hourlyRate__goe != null)
+        if (query.hourlyRate__goe != null)
             predicate = predicate.and(qUser.tutorProfile.courses.any().hourlyRate.goe(query.hourlyRate__goe));
 
-        if(query.hourlyRate__loe != null)
+        if (query.hourlyRate__loe != null)
             predicate = predicate.and(qUser.tutorProfile.courses.any().hourlyRate.loe(query.hourlyRate__loe));
 
-        return (List<User>)makeCollection(userRepository.findAll(predicate));
+        return (List<User>) makeCollection(userRepository.findAll(predicate));
     }
 
     @Override

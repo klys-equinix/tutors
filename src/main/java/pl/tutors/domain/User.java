@@ -26,7 +26,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "\"user\"")
-@ToString(exclude = {"password", "resetKey"})
+@ToString(exclude = {"password", "resetKey", "tutorProfile"})
 @EqualsAndHashCode(callSuper = false, of = {"id", "email"})
 @NoArgsConstructor
 public class User {
